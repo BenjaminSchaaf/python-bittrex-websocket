@@ -300,7 +300,7 @@ class BittrexSocket(WebSocket):
             # ---------------------------------------------------------------------------
             if runtime is not None and time() - runtime > 600:
                 self_workaround['urls'] = reload_generator()
-            self_workaround['connection'] = self._create_cookie()
+            # self_workaround['connection'] = self._create_cookie()
             return self_workaround
 
         urls = ['https://socket-stage.bittrex.com/signalr',
@@ -915,17 +915,12 @@ class BittrexSocket(WebSocket):
         return results
 
     def _create_signalr_connection(self):
-        conn = self._create_cookie()
+        with cfscrape.create_scraper() as connection:
+            conn = Connection(None, connection)
         conn.received += self._on_debug
         conn.error += self.on_error
         corehub = conn.register_hub('coreHub')
         return BittrexConnection(conn, corehub)
-
-    @staticmethod
-    def _create_cookie():
-        with cfscrape.create_scraper() as connection:
-            conn = Connection(None, connection)
-        return conn
 
     def _is_orderbook_snapshot(self, msg):
         # Detect if the message contains order book snapshots and manipulate them.
