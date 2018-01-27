@@ -977,7 +977,7 @@ class BittrexSocket(WebSocket):
                 return
             self._is_orderbook_snapshot(kwargs)
         except WebSocketConnectionClosedException:
-            print("GOTCHA")
+            print("GOTCHA _on_debug")
 
     def _on_tick_update(self, msg):
         try:
@@ -998,7 +998,7 @@ class BittrexSocket(WebSocket):
                              **{'trades': msg['Fills']})
                     self.trades.on_change(d)
         except WebSocketConnectionClosedException:
-            print("GOTCHA")
+            print("GOTCHA _on_tick_update")
 
     def _on_ticker_update(self, msg):
         """
@@ -1022,7 +1022,7 @@ class BittrexSocket(WebSocket):
                             if subs['TickerUpdate']['Active']:
                                 self.updateSummaryState.on_change(update)
         except WebSocketConnectionClosedException:
-            print("GOTCHA")
+            print("GOTCHA _on_ticker_update")
 
     # -------------------------------------
     # Private Channels Supplemental Methods
@@ -1113,7 +1113,7 @@ class BittrexSocket(WebSocket):
             try:
                 conn_object.conn.close()
             except WebSocketConnectionClosedException:
-                pass
+                print("Gotcha _is_close_me")
             conn_object.deactivate()
             return True
 
