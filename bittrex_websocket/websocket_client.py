@@ -5,7 +5,7 @@
 # Stanislav Lazarov
 
 from __future__ import print_function
-
+from signalr import Connection
 import logging
 from abc import ABCMeta, abstractmethod
 from threading import Thread, current_thread
@@ -13,7 +13,6 @@ from time import sleep, time
 
 import cfscrape
 from events import Events
-from signalr import Connection
 from ._exceptions import *
 
 from ._auxiliary import BittrexConnection
